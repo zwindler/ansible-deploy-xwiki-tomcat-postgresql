@@ -1,0 +1,27 @@
+---
+# Playbook to install XWiki on a Tomcat8/PostgreSQL with all its dependancies on RHEL/CentOS 7
+- name: "XWiki prerequisites & configuration"
+  remote_user: root
+  vars:
+    - jdk_version: java-1.8.0-openjdk.x86_64
+    - xwiki_password: xwiki
+#Not working with latest version
+#    - tomcat_version: 8.5.23
+    - tomcat_version: 8.5.5
+    - tomcat8_path: /var/lib/tomcat8
+#You can customize this if you don't want XWiki as tomcat ROOT
+    - xwiki_path: ROOT
+    - xwiki_version: 9.9
+    - jdbc_postgresql_version: 42.1.4
+    - clean_tomcat_ROOT: yes
+#Change if xwiki_path is not set to ROOT
+    - clean_tomcat_xwiki: no
+  vars_prompt:
+    - name: "xwiki_password"
+      prompt: "XWiki Database Password"
+  roles:
+    - install_xwiki
+#If you have proxy issues, set this
+#  environment:
+#    - http_proxy: http://{{ proxy }}:8080
+#    - https_proxy: https://{{ proxy }}:8080
