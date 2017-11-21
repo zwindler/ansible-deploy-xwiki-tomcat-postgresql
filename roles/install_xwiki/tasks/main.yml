@@ -22,7 +22,6 @@
     creates: /var/lib/pgsql/initdb.log
   become: true
   become_user: postgres
-  executable: /bin/bash
 
 - name: Allow localhost connection on postgresql
   lineinfile: 
@@ -62,9 +61,7 @@
 
 - name: Get tomcat dist from apache website
   unarchive:
-#Not working with latest tomcat version
-#    src: http://apache.mirrors.ovh.net/ftp.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
-    src: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
+    src: http://apache.mirrors.ovh.net/ftp.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
     validate_certs: false
     dest: /var/lib
     remote_src: yes
