@@ -10,7 +10,7 @@
     - tomcat8_path: /var/lib/tomcat8
 #You can customize this if you don't want XWiki as tomcat ROOT
     - xwiki_path: ROOT
-    - xwiki_version: "9.10"
+    - xwiki_version: "9.9"
     - jdbc_postgresql_version: 42.1.4
     - clean_tomcat_ROOT: yes
 #Change if xwiki_path is not set to ROOT
