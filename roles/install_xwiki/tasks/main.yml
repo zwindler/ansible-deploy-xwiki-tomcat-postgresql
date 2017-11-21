@@ -22,7 +22,6 @@
     creates: /var/lib/pgsql/initdb.log
   become: true
   become_user: postgres
-  executable: /bin/bash
 
 - name: Allow localhost connection on postgresql
   lineinfile: 
