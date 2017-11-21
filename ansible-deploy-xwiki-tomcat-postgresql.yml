@@ -1,6 +1,7 @@
 ---
 # Playbook to install XWiki on a Tomcat8/PostgreSQL with all its dependancies on RHEL/CentOS 7
 - name: "XWiki prerequisites & configuration"
+  hosts: all
   remote_user: root
   vars:
     - jdk_version: java-1.8.0-openjdk.x86_64
