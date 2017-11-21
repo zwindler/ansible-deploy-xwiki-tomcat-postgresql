@@ -11,6 +11,7 @@
     - postgresql-server
     - postgresql-contrib
     - python-pip
+    - unzip
 
 - name: add psycopg2 for PostgreSQL
   pip:
