@@ -12,6 +12,7 @@
     - postgresql-contrib
     - python-pip
     - unzip
+    - sudo
 
 - name: add psycopg2 for PostgreSQL
   pip:
@@ -30,6 +31,18 @@
     regexp: "host    all             all             127.0.0.1/32"
     line: "host    all             all             127.0.0.1/32            md5"
     backrefs: yes
+  notify: "notify pgsql for restart"
+
+- name: Allow localhost connection op postgresql (2)
+  lineinfile:
+    path: /var/lib/pgsql/data/pg_hba.conf
+    regexp: "local   all             all"
+    line: "local   all             all                                     trust"
+    backrefs: yes
+  notify: "notify pgsql for restart"
+
+- name: "Flush handlers"
+  meta: flush_handlers
 
 - name: Start and enable postgresql service
   systemd:
@@ -42,12 +55,17 @@
   postgresql_user: 
     name: xwiki
     password: "{{ xwiki_password }}"
+  become: true
+  become_user: postgres
 
 - name: Create xwiki postgreSQL database
   postgresql_db:
     name: xwiki
     owner: xwiki
     encoding: unicode
+    template: template0
+  become: true
+  become_user: postgres
 
 - name: Create tomcat group
   group: 
@@ -120,7 +138,7 @@
 
 - name: Get and unzip xwiki war
   unarchive:
-    src: http://download.forge.ow2.org/xwiki/xwiki-{{ xwiki_version }}.war
+    src: "{{xwiki_artifact_url}}"
     dest: "{{ tomcat8_path }}/webapps/{{ xwiki_path }}"
     remote_src: yes
 
